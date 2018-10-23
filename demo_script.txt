@@ -160,22 +160,8 @@ start new
         hit create pull request
 
 
-
-========================
-outline:
-  what is source code control?
-  what is git?
-  how is git different from github?
-
-
-
-  why would I use git?
-    for code you're not explicitly sharing
-    for code that you do intend to share
-
-
-=================================
-Demo script
+================================
+OLD Demo script
   mkdir -p my_study/programming/programs
   cd into that
   git init
