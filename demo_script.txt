@@ -1,0 +1,241 @@
+open Kraken
+close whichever repo opens
+start new
+  git_demo1
+  note it added a readme
+  right-click under 'unstaged files'
+    create new
+      main.sas
+      right-click that--> open in default program.  for me that's sublime but there's no reason it can't be SAS or whatever you're using
+      hdr
+      comment: Pulls some orders for suboxone.
+
+      lib vdw
+      clar
+
+      sql
+        create table vdw.subox_orders as
+        select *
+        from clarity.order_med
+        ;
+      run
+      back to kraken
+      note 'unstaged files'
+      file menu -> open in file manager
+
+      note--not much different from normal stuff here--sas file, log file. the readme & .git dirs are different, but that's it.
+
+      back to kraken
+      stage main.sas
+      commit title "just getting started"
+      detail "a minimally functional pull of medication orders"
+
+      edit readme.md
+        md means markdown. it's just text really
+        feel free to ignore--it's just a convention.
+
+      but note the 'file changes in working directory' at the top--show those
+      stage readme.md
+      right-click the log tho--ignore that--ignore all files w/the extension .log actually
+
+      kraken made us a new file--.gitignore
+        again--only text
+        contents are pretty self explanatory
+        you can add other things here too
+        let's add *.sas7bdat
+
+      stage .gitignore
+      commit
+
+      So now we have 3 commits
+        click each one & show that it shows which files have changed.
+      Neat!
+
+      But let's work on our program a bit.  It's right now pulling all medication orders, but we only want
+      ones for suboxone.  Those are:
+      72376, 52421, 72375, 72382, 52420, 133602, 133598, 72381, 89168, 133597,
+      133601, 134725, 134724, 134723, 144486, 148759, 144472, 156839, 156840,
+      147766, 153825, 151929, 156841, 144501, 15831, 152266, 155947, 159267
+
+      add those in a where clause. run.
+
+      stage main.sas
+      commit "Zeroing in on suboxone orders"
+
+      Later on we notice we're getting a ton of empty columns, wasting space & time inspecting them.  Lets fix that
+      select om.order_med_id
+      , om.pat_id
+      , om.pat_enc_csn_id
+      , om.ordering_date
+      , om.pharmacy_id
+      , om.medication_id
+      , om.sig
+      , om.quantity
+      , om.refills
+      , om.start_date
+      , om.end_date
+      , om.med_presc_prov_id
+      , om.update_date
+      , om.order_inst
+      , om.discon_user_id
+      , om.discon_time
+      , om.order_start_time
+      , om.order_end_time
+      , om.workstation_id
+      , om.authrzing_prov_id
+      , om.ord_prov_id
+      , om.is_pending_ord_yn
+      , om.med_comments
+      , om.refills_remaining
+      , om.med_dis_disp_qty
+      , om.order_class_c
+      , om.rsn_for_discon_c
+      , om.order_status_c
+      , om.ord_creatr_user_id
+      , om.pat_loc_id
+      , om.hv_discrete_dose
+      , om.hv_discr_freq_id
+      , om.hv_dose_unit_c
+      , om.med_route_c
+
+      kraken
+      view changes
+      stage main.sas
+      commit "Refined field list"
+
+      Note that I'm only using the commit summary & not the description--that's arguably bad practice, but whatevs--it's a demo. In real life, you can include as much detail as you like--include URLs to issues on your issue tracker, etc.
+
+      Now let's look at the diff view.
+        pick a commit
+        the files that were affected in that commit are listed on the right--click one.
+        how cool is that?
+
+      So you can see it's useful even if you're the only one ever touching this code.
+        It's a safety-net.
+        When something is minimally functional--you save the state.
+        And now--you can be bold.
+          remove dead-ends in your code that increase the burden of reading it later
+          try something completely different
+          you can always get back to your previously functional state.
+          it's like saving in a video game before you open the door to the boss monster
+
+      So--now imagine we have a good job that we like, and we want to share it with others.  Which we did w/the Utilities repo.
+
+      go to https://github.com/kpwhri
+      new repo: vdw_utilities
+      private
+
+      github shows the tutorial page for a new empty repo, but we can ignore all but the remote
+      git@github.com:kpwhri/vdw_utilities.git
+      copy that
+      kraken
+      remotes--hit plus button
+      name ('private github') & paste in the remote spec
+      right click local -> master: set upstream
+      specify the name you gave when you created the remote
+      hit push button up top
+      wait for success message
+      refresh browser
+
+      Now code and all commits/diffs are backed up & available for download!
+
+      Forking
+        even better for collaboration!
+        you get your own copy of the repo
+        can make changes to your copy--test, make sure it works
+        then push up to your copy
+        then, submit a pull request!
+
+        https://github.com/kpwhri/VDW-Census
+        hit fork to fork into rpardee
+        now I'm in rpardee/VDW-Census
+        clone--copy
+        kraken--new
+        make trivial change
+        stage
+        commit
+        pussh
+        note # of commits on rpardee/VDW-Census
+        then refresh
+        hit create pull request
+
+
+
+========================
+outline:
+  what is source code control?
+  what is git?
+  how is git different from github?
+
+
+
+  why would I use git?
+    for code you're not explicitly sharing
+    for code that you do intend to share
+
+
+=================================
+Demo script
+  mkdir -p my_study/programming/programs
+  cd into that
+  git init
+    notice new (master) at end of prompt--that's cue you're in a version controlled folder.
+  create get_cohort.sas
+-------------------------
+libname my_study 'blah blah blah' ;
+** We want anybody enrolled on June 30th. ;
+data cohort ;
+  set vdw.enroll ;
+  where '30jun2004'd between enr_start and enr_end ;
+run ;
+-------------------------
+  create formats.sas
+-------------------------
+proc format ;
+  value $gen
+    'F' = 'Female'
+    'M' = 'Male'
+  ;
+quit ;
+-------------------------
+  git status--see--both files untracked.
+  git add get_cohort.sas
+  git status--see that one file is now staged for commit.  Git will monitor this file forevermore.
+  git add formats.sas
+  git commit
+    git pops your favorite editor for you to hold forth on the heroic programming you just did.
+  change get_cohort.sas & formats.sas (change 'male' to 'boy' say; add age )
+-------------------------
+proc sql ;
+  create table my_study.cohort as
+  select c.mrn, d.gender
+  from  cohort as c INNER JOIN
+        vdw.demog as d
+  on    c.mrn = d.mrn
+  ;
+quit ;
+-------------------------
+  git diff
+    notice you get changes reported for all files.
+    comparison is last committed version vs what's in working dir right now.
+    do git diff <<filename>> for just the changes to <<filename>>
+  Now we want to commit these changes--you use the same command as for adding new files to track--git add
+  git add .
+    a shortcut that says "add every file in here to the repo (changed or new)"
+  git commit
+  Now we have 2 commits--let's look at our history
+  git log
+  Notice that each commit is identified by an ugly-ass hex number--that's a SHA1 hash value.
+    it is possible to add a 'tag' to particular commits so you can use those to refer to a particular commit.
+    but the good news is that you really only need to use the first four chars of the hash to refer to a particular commit.
+  go back in time temporarily
+    - generally (git checkout <<hash>>)
+        undo is git checkout master
+    - per file (git checkout <<hash>> filename)
+        notice that git considers the file to be changed--you can commit this change to effectively revert just a single file.
+        undo is git checkout filename
+
+  go back in time permanently by reverting a commit
+    git revert <<hash>>
+    notice you get a brand new commit for the reversion--which means you can even un-do the un-do if you want.
+    In general, it's tough to get git to actually discard data.  Not impossible, just tough.
