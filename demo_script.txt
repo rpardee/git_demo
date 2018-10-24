@@ -1,4 +1,5 @@
 pre-demo checklist
+  open kraken
   rm git_demo1 folder under /vdw
   rm vdw-census repo from
     /vdw
