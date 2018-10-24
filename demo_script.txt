@@ -1,3 +1,12 @@
+pre-demo checklist
+  rm git_demo1 folder under /vdw
+  rm vdw-census repo from
+    /vdw
+    https://github.com/rpardee/
+  rm kpwrhi_ghub remote from local utilities repo
+  rm https://github.com/kpwhri/vdw-utilities
+
+
 open Kraken
 close whichever repo opens
 start new
@@ -110,14 +119,7 @@ start new
         the files that were affected in that commit are listed on the right--click one.
         how cool is that?
 
-      So you can see it's useful even if you're the only one ever touching this code.
-        It's a safety-net.
-        When something is minimally functional--you save the state.
-        And now--you can be bold.
-          remove dead-ends in your code that increase the burden of reading it later
-          try something completely different
-          you can always get back to your previously functional state.
-          it's like saving in a video game before you open the door to the boss monster
+      [[back to slideshow]]
 
       So--now imagine we have a good job that we like, and we want to share it with others.  Which we did w/the Utilities repo.
 
@@ -154,7 +156,7 @@ start new
         make trivial change
         stage
         commit
-        pussh
+        push
         note # of commits on rpardee/VDW-Census
         then refresh
         hit create pull request
