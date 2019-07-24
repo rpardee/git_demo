@@ -62,7 +62,7 @@ start new
       Neat!
 
       But let's work on our program a bit.  It's right now pulling all medication orders, but we only want
-      ones for suboxone.  Those are:
+      ones for suboxone.  Those are medication_ids
       72376, 52421, 72375, 72382, 52420, 133602, 133598, 72381, 89168, 133597,
       133601, 134725, 134724, 134723, 144486, 148759, 144472, 156839, 156840,
       147766, 153825, 151929, 156841, 144501, 15831, 152266, 155947, 159267
@@ -120,7 +120,7 @@ start new
         the files that were affected in that commit are listed on the right--click one.
         how cool is that?
 
-      [[back to slideshow]]
+      [[back to slideshow for slide 12]]
 
       So--now imagine we have a good job that we like, and we want to share it with others.  Which we did w/the Utilities repo.
 
@@ -130,17 +130,21 @@ start new
 
       github shows the tutorial page for a new empty repo, but we can ignore all but the remote
       git@github.com:kpwhri/vdw_utilities.git
+
       copy that
       kraken
       remotes--hit plus button
       name ('private github') & paste in the remote spec
       right click local -> master: set upstream
+        choose the new github remote from the dropdown
       specify the name you gave when you created the remote
       hit push button up top
       wait for success message
       refresh browser
 
       Now code and all commits/diffs are backed up & available for download!
+
+      back to slideshow for slide 13
 
       Forking
         even better for collaboration!
